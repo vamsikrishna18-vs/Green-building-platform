@@ -1,0 +1,11 @@
+{
+  "name": "greenbuild-platform",
+  "version": "2.5.0",
+  "description": "GreenBuild Sustainability Assessment & Intelligence Platform",
+  "private": true,
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "start": "cd server && npm start",
+    "test": "cd server && node src/testPhase5.js"
+  }
+}

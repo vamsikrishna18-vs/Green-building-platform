@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased overflow-x-hidden font-sans text-sm selection:bg-eco-500/30 selection:text-eco-300;
+  }
+
+  h1 {
+    @apply text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight;
+  }
+  h2 {
+    @apply text-xl sm:text-2xl font-bold text-white tracking-tight;
+  }
+  h3 {
+    @apply text-lg font-bold text-white tracking-tight;
+  }
+  h4 {
+    @apply text-sm font-bold text-slate-200 uppercase tracking-wider;
+  }
+}
+
+/* Professional B2B SaaS Design System Tokens */
+@layer components {
+  /* Panels & Surface Containers */
+  .panel-flat {
+    @apply bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm;
+  }
+
+  .panel-elevated {
+    @apply bg-slate-900/95 border border-slate-800/90 rounded-2xl p-6 shadow-lg shadow-slate-950/50 hover:border-slate-700 transition-all duration-200;
+  }
+
+  .panel-accent {
+    @apply bg-gradient-to-br from-slate-900 via-slate-900 to-eco-950/30 border border-eco-500/20 rounded-2xl p-6;
+  }
+
+  /* Button System */
+  .btn-saas-primary {
+    @apply inline-flex items-center justify-center space-x-2 px-4 py-2 rounded-xl bg-eco-500 hover:bg-eco-400 active:bg-eco-600 text-slate-950 font-bold text-xs shadow-md shadow-eco-900/20 transition-all duration-150 transform hover:-translate-y-0.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-saas-secondary {
+    @apply inline-flex items-center justify-center space-x-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 active:bg-slate-850 text-slate-200 border border-slate-700 font-semibold text-xs transition-all duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-saas-outline {
+    @apply inline-flex items-center justify-center space-x-2 px-3.5 py-1.5 rounded-xl bg-eco-500/10 hover:bg-eco-500/20 text-eco-400 border border-eco-500/30 text-xs font-semibold transition-all duration-150 cursor-pointer;
+  }
+
+  .btn-saas-ghost {
+    @apply inline-flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 text-xs font-medium transition-colors cursor-pointer;
+  }
+
+  /* Badges & Status Indicators */
+  .badge-saas-success {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold;
+  }
+
+  .badge-saas-warning {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30 text-[11px] font-bold;
+  }
+
+  .badge-saas-info {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-500/15 text-teal-300 border border-teal-500/30 text-[11px] font-bold;
+  }
+
+  .badge-saas-neutral {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-[11px] font-semibold;
+  }
+
+  /* Form Input Styling */
+  .input-saas {
+    @apply w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-eco-500 focus:ring-1 focus:ring-eco-500 transition-colors;
+  }
+
+  /* Table Styling */
+  .table-saas {
+    @apply w-full text-left text-xs text-slate-300;
+  }
+
+  .table-saas th {
+    @apply px-4 py-3 bg-slate-900/90 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-800;
+  }
+
+  .table-saas td {
+    @apply px-4 py-3.5 border-b border-slate-800/60;
+  }
+
+  .table-saas tr:hover td {
+    @apply bg-slate-900/60 transition-colors;
+  }
+}
+
+/* Micro-interaction & Smooth Transition Classes */
+.hover-lift {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Range input styling */
+input[type="range"] {
+  height: 6px;
+  border-radius: 3px;
+  background: #1e293b;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #10b981;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080d1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* Printable PDF rules */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .printable-report {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .panel-flat, .panel-elevated {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    color: #0f172a !important;
+  }
+}
