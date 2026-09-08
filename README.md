@@ -204,8 +204,8 @@ green-building-platform/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/chandrababu07/green-building-platform.git
-cd green-building-platform
+git clone https://github.com/vamsikrishna18-vs/Green-building-platform.git
+cd Green-building-platform
 ```
 
 ### 2. Install dependencies
