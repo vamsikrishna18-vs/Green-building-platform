@@ -8,19 +8,18 @@ const JWT_SECRET = process.env.JWT_SECRET || 'greenbuild_jwt_secret_key_2026_sup
  */
 const requireAuth = async (req, res, next) => {
   try {
+    let token;
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
-        success: false,
-        error: 'Authentication required. Please log in.'
-      });
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
     }
 
-    const token = authHeader.split(' ')[1];
     if (!token) {
       return res.status(401).json({
         success: false,
-        error: 'Authentication token missing.'
+        error: 'Authentication required. Please log in.'
       });
     }
 
@@ -49,18 +48,22 @@ const requireAuth = async (req, res, next) => {
  */
 const optionalAuth = async (req, res, next) => {
   try {
+    let token;
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.split(' ')[1];
-      if (token) {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = {
-          _id: decoded.id || decoded._id,
-          name: decoded.name,
-          email: decoded.email,
-          role: decoded.role || 'user'
-        };
-      }
+      token = authHeader.split(' ')[1];
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
+    }
+
+    if (token) {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      req.user = {
+        _id: decoded.id || decoded._id,
+        name: decoded.name,
+        email: decoded.email,
+        role: decoded.role || 'user'
+      };
     }
   } catch (error) {
     // Ignore error for optional auth

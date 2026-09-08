@@ -1,12 +1,16 @@
-const dotenv = require('dotenv');
-
-// Load .env FIRST
-dotenv.config();
-
-const express = require('express');
-const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const dotenv = require('dotenv');
+
+// Load .env FIRST (resolving server/.env regardless of process.cwd())
+const serverEnvPath = path.resolve(__dirname, '../.env');
+if (fs.existsSync(serverEnvPath)) {
+  dotenv.config({ path: serverEnvPath });
+} else {
+  dotenv.config();
+}
+
+const cookieParser = require('cookie-parser');
 
 const connectDB = require('./config/db');
 const assessmentRoutes = require('./routes/assessmentRoutes');
@@ -24,14 +28,18 @@ const PORT = process.env.PORT || 5000;
 // MIDDLEWARE & CORS
 // =====================================================
 
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(',').map(o => o.trim())
-  : '*';
-
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (!process.env.CORS_ORIGIN || process.env.CORS_ORIGIN === '*') return callback(null, true);
+    const allowed = process.env.CORS_ORIGIN.split(',').map(o => o.trim());
+    if (allowed.includes(origin)) return callback(null, true);
+    callback(null, true);
+  },
   credentials: true
 }));
+
+app.use(cookieParser());
 
 app.use(express.json({
   limit: '10mb'
@@ -95,12 +103,11 @@ const startServer = async () => {
     console.log('   GREENBUILD BACKEND STARTING');
     console.log('========================================');
 
-    // Check environment variable
     if (!process.env.MONGODB_URI) {
-      throw new Error('MONGODB_URI is missing from .env');
+      console.warn('[Config] Notice: MONGODB_URI is missing from .env. Server will run in in-memory fallback mode.');
+    } else {
+      console.log('[Config] MONGODB_URI loaded');
     }
-
-    console.log('[Config] MONGODB_URI loaded');
 
     // Connect to MongoDB Atlas FIRST
     console.log('[MongoDB] Connecting to MongoDB Atlas...');
