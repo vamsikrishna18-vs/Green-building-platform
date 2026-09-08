@@ -16,11 +16,8 @@ export function AuthProvider({ children }) {
   // Automatically restore session on page load/refresh
   useEffect(() => {
     async function restoreSession() {
-      const token = getStoredToken();
-      if (token) {
-        const currentUser = await getCurrentUser();
-        setUser(currentUser);
-      }
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
       setLoading(false);
     }
     restoreSession();

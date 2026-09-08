@@ -28,10 +28,15 @@ export function getAuthHeaders() {
   return headers;
 }
 
+export function getGoogleLoginUrl() {
+  return `${AUTH_API}/google/login`;
+}
+
 export async function registerUser({ name, email, password }) {
   const res = await fetch(`${AUTH_API}/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify({ name, email, password })
   });
 
@@ -50,6 +55,7 @@ export async function loginUser({ email, password }) {
   const res = await fetch(`${AUTH_API}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify({ email, password })
   });
 
@@ -65,13 +71,11 @@ export async function loginUser({ email, password }) {
 }
 
 export async function getCurrentUser() {
-  const token = getStoredToken();
-  if (!token) return null;
-
   try {
     const res = await fetch(`${AUTH_API}/me`, {
       method: 'GET',
-      headers: getAuthHeaders()
+      headers: getAuthHeaders(),
+      credentials: 'include'
     });
 
     if (!res.ok) {
@@ -91,7 +95,8 @@ export async function logoutUser() {
   try {
     await fetch(`${AUTH_API}/logout`, {
       method: 'POST',
-      headers: getAuthHeaders()
+      headers: getAuthHeaders(),
+      credentials: 'include'
     });
   } catch (err) {
     // Ignore error
